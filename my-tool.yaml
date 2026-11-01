@@ -1,3 +1,17 @@
+# --- 追記: データの保存用PVC ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-tool-data-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+# --- 既存のDeploymentを修正 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,17 +33,11 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-tool-svc
-  namespace: default
-spec:
-  selector:
-    app: my-tool
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-      
+          volumeMounts:
+            # PHPが実際にテキストデータを保存するディレクトリを指定（要変更）
+            - name: app-data
+              mountPath: /var/www/html/backend/data
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: my-tool-data-pvc
