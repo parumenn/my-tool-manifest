@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-tool-data-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: my-tool-storage  # ←この1行を必ず追加してください
+  resources:
+    requests:
+      storage: 5Gi  # PVと同じかそれ以下のサイズ
