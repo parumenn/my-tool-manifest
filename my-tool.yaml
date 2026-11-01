@@ -1,16 +1,3 @@
-# --- 追記: データの保存用PVC ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: my-tool-data-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
----
 # --- 既存のDeploymentを修正 ---
 apiVersion: apps/v1
 kind: Deployment
