@@ -1,0 +1,57 @@
+# リアルタイム共有メモ用コラボサーバ（Node + Yjs）
+# LevelDB は単一ライター前提のため replicas は 1 固定
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-tool-collab
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: my-tool-collab
+  template:
+    metadata:
+      labels:
+        app: my-tool-collab
+    spec:
+      containers:
+        - name: collab
+          image: ghcr.io/parumenn/my-tool-collab:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: DATA_DIR
+              value: /data
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          volumeMounts:
+            - name: app-data
+              mountPath: /data
+              subPath: collab-data
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: my-tool-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-tool-collab-svc
+  namespace: default
+spec:
+  selector:
+    app: my-tool-collab
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

@@ -9,6 +9,20 @@ spec:
   - host: mytool.parumenn.com
     http:
       paths:
+      - path: /collab-api
+        pathType: Prefix
+        backend:
+          service:
+            name: my-tool-collab-svc
+            port:
+              number: 8080
+      - path: /collab-ws
+        pathType: Prefix
+        backend:
+          service:
+            name: my-tool-collab-svc
+            port:
+              number: 8080
       - path: /
         pathType: Prefix
         backend:
