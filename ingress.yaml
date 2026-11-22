@@ -4,7 +4,7 @@ metadata:
   name: my-tool-ingress
   namespace: default
   annotations:
-  nginx.org/websocket-services: "my-tool-collab-svc"
+    nginx.org/websocket-services: "my-tool-collab-svc"
 spec:
   ingressClassName: nginx-f5
   rules:
