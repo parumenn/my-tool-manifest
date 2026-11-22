@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: my-tool-web
-          image: ghcr.io/parumenn/my-tool-build:052fcec5ba62e0d8294aadbdfe19c04383a177e8
+          image: ghcr.io/parumenn/my-tool-build:3fc82d5c21c2effaa5b4d9cd43171dd40d505a67
           imagePullPolicy: Always
           ports:
             - containerPort: 80
