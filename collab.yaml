@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: collab
-          image: ghcr.io/parumenn/my-tool-collab:8c873b6d9a2fe878fec08cb562895db447c4513a
+          image: ghcr.io/parumenn/my-tool-collab:a14a85ec750f655130f6a06e410e21627ea396c6
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
